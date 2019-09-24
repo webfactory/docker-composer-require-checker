@@ -20,7 +20,30 @@ jobs:
       uses: docker://webfactory/composer-require-checker:2.0.0
 ```
 
-To pass a custom config file, add this:
+This configuration will use the pre-built image at the Docker Hub. If you
+feel more secure with building the Docker Image ad-hoc from the `Dockerfile`
+in this repo, use the following syntax instead.
+
+```diff
+# .github/workflows/check.yml
+on: [push]
+name: Main
+jobs:
+  composer-require-checker:
+    name: ComposerRequireChecker
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: ComposerRequireChecker
+-      uses: docker://webfactory/composer-require-checker:2.0.0
++      uses: webfactory/docker-composer-require-checker@0.1.0
+```
+
+*Note:* When using the Docker image, the tag refers to the Docker image tag.
+When referring to this repo, use a tag or commit hash for the Dockerfile.
+
+In either case, to pass a custom config file, add this:
+
 ```diff
 # .github/workflows/check.yml
 on: [push]
