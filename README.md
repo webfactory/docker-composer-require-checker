@@ -39,6 +39,18 @@ jobs:
 
 ## Docker
 
-You can also run the Docker image in any given directory like this:
+Apart from GitHub Actions, you can run the Docker image in any given
+directory:
 
 `docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:2.0.0`
+
+## Credits, Copyright and License
+
+This action was written by webfactory GmbH, Bonn, Germany. We're a software development
+agency with a focus on PHP (mostly [Symfony](http://github.com/symfony/symfony)). If you're a
+developer looking for new challenges, we'd like to hear from you!
+
+- <https://www.webfactory.de>
+- <https://twitter.com/webfactory>
+
+Copyright 2019 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
