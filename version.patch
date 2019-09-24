@@ -1,0 +1,13 @@
+diff --git a/src/ComposerRequireChecker/Cli/Application.php b/src/ComposerRequireChecker/Cli/Application.php
+index cc5032e..bdb6b6c 100644
+--- a/src/ComposerRequireChecker/Cli/Application.php
++++ b/src/ComposerRequireChecker/Cli/Application.php
+@@ -17,6 +17,8 @@ class Application extends AbstractApplication
+
+     private function getPackageVersion(): string
+     {
++        return file_get_contents('/composer-require-checker/version');
++
+         $version = null;
+         $pharFile = \Phar::running();
+         if ($pharFile) {
