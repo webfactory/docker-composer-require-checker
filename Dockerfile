@@ -16,6 +16,8 @@ RUN git checkout $revision \
 FROM php:7.2-cli
 COPY --from=staging /composer-require-checker /composer-require-checker
 
+COPY memory.ini /usr/local/etc/php/conf.d/memory.ini
+
 RUN mkdir /app
 WORKDIR /app
 ENTRYPOINT ["/composer-require-checker/bin/composer-require-checker"]
