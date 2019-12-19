@@ -13,7 +13,7 @@ RUN git checkout $revision \
     && patch -p1 < /version.patch \
     && composer install --no-progress --no-interaction --no-ansi --no-dev
 
-FROM php:7.2-cli
+FROM php:7.4-cli
 COPY --from=staging /composer-require-checker /composer-require-checker
 
 RUN mkdir /app
