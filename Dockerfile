@@ -1,16 +1,12 @@
 FROM composer:latest as staging
 
-RUN apk --no-cache add git patch
-COPY version.patch /version.patch
+RUN apk --no-cache add git
 
 RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-require-checker
 WORKDIR /composer-require-checker
 ARG revision=master
 ENV COMPOSER_REQUIRE_CHECKER_VERSION=${revision}
 RUN git checkout $revision \
-    && git describe --tags --dirty=-dev --always > version \
-    && echo "Building version $(cat version)" \
-    && patch -p1 < /version.patch \
     && composer install --no-progress --no-interaction --no-ansi --no-dev
 
 FROM php:7.4-cli
