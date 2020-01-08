@@ -8,7 +8,7 @@ You can run it as a GitHub Action like so:
 
 ```yaml
 # .github/workflows/check.yml
-on: [push]
+on: [push, pull_request]
 name: Main
 jobs:
   composer-require-checker:
@@ -26,7 +26,7 @@ in this repo, use the following syntax instead.
 
 ```diff
 # .github/workflows/check.yml
-on: [push]
+on: [push, pull_request]
 name: Main
 jobs:
   composer-require-checker:
