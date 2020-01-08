@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:2.0.0
+      uses: docker://webfactory/composer-require-checker:2.1.0
 ```
 
 This configuration will use the pre-built image at the Docker Hub. If you
@@ -35,12 +35,18 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: ComposerRequireChecker
--      uses: docker://webfactory/composer-require-checker:2.0.0
+-      uses: docker://webfactory/composer-require-checker:2.1.0
 +      uses: webfactory/docker-composer-require-checker@0.1.0
 ```
 
 *Note:* When using the Docker image, the tag refers to the Docker image tag.
 When referring to this repo, use a tag or commit hash for the Dockerfile.
+
+*Note:* This will build the Docker image every time your workflow is run.
+The build will use the `master` branch of `ComposerRequireChecker`, not a
+stable release. If you know how the `revision` build-arg can be passed to 
+Docker when running inside a GitHub action (so that you could specify the
+right version yourself), please open a PR.
 
 In either case, to pass a custom config file, add this:
 
