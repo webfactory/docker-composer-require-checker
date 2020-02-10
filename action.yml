@@ -1,0 +1,8 @@
+name: 'ComposerRequireChecker'
+description: 'Run `composer-require-checker` to make sure all Composer dependencies are declared explicitly'
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
+branding:
+    icon: award
+    color: 'green'
