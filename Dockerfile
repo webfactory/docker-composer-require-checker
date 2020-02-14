@@ -1,3 +1,8 @@
+FROM php:7.4-cli as build_extensions
+
+RUN docker-php-ext-install gettext \
+    && docker-php-ext-enable gettext
+
 FROM composer:latest as staging
 
 RUN apk --no-cache add git
@@ -10,6 +15,9 @@ RUN git checkout $revision \
     && composer install --no-progress --no-interaction --no-ansi --no-dev --no-suggest --ignore-platform-reqs
 
 FROM php:7.4-cli
+
+COPY --from=build_extensions /usr/local/lib/php /usr/local/lib/php
+COPY --from=build_extensions /usr/local/etc/php /usr/local/etc/php
 COPY --from=staging /composer-require-checker /composer-require-checker
 
 COPY memory.ini /usr/local/etc/php/conf.d/memory.ini
