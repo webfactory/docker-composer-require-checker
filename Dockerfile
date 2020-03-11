@@ -1,9 +1,13 @@
-FROM php:7.4-cli as build_extensions
+FROM php:7.4-cli as base
+RUN apt-get update && apt-get install -y libzip4
 
-RUN docker-php-ext-install gettext \
-    && docker-php-ext-enable gettext
+FROM base as build_extensions
 
-FROM composer:latest as staging
+RUN apt-get update && apt-get install -y libzip-dev \
+    && docker-php-ext-install gettext zip \
+    && docker-php-ext-enable gettext zip
+
+FROM composer:1.9.3 as staging
 
 RUN apk --no-cache add git
 
@@ -14,7 +18,7 @@ RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-re
 RUN git checkout $revision \
     && composer install --no-progress --no-interaction --no-ansi --no-dev --no-suggest --ignore-platform-reqs
 
-FROM php:7.4-cli
+FROM base
 
 COPY --from=build_extensions /usr/local/lib/php /usr/local/lib/php
 COPY --from=build_extensions /usr/local/etc/php /usr/local/etc/php
