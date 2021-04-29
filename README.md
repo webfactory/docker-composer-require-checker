@@ -15,7 +15,7 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: ComposerRequireChecker
       uses: docker://webfactory/composer-require-checker:2.1.0
 ```
@@ -33,7 +33,7 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: ComposerRequireChecker
 -      uses: docker://webfactory/composer-require-checker:2.1.0
 +      uses: webfactory/docker-composer-require-checker@0.1.0
@@ -59,7 +59,7 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: ComposerRequireChecker
       uses: docker://webfactory/composer-require-checker:2.0.0
 +      with:
