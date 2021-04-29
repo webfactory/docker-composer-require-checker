@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:2.1.0
+      uses: docker://webfactory/composer-require-checker:3.2.0
 ```
 
 This configuration will use the pre-built image at the Docker Hub. If you
@@ -35,7 +35,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: ComposerRequireChecker
--      uses: docker://webfactory/composer-require-checker:2.1.0
+-      uses: docker://webfactory/composer-require-checker:3.2.0
 +      uses: webfactory/docker-composer-require-checker@0.1.0
 ```
 
@@ -61,7 +61,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:2.0.0
+      uses: docker://webfactory/composer-require-checker:3.2.0
 +      with:
 +        args: --config-file=composer-require-checker.js
 ```
@@ -71,7 +71,7 @@ jobs:
 Apart from GitHub Actions, you can run the Docker image in any given
 directory:
 
-`docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:2.0.0`
+`docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:3.2.0`
 
 ## Credits, Copyright and License
 
@@ -82,4 +82,4 @@ developer looking for new challenges, we'd like to hear from you!
 - <https://www.webfactory.de>
 - <https://twitter.com/webfactory>
 
-Copyright 2019 – 2020 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2019 – 2021 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).

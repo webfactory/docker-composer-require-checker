@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y libzip-dev \
     && docker-php-ext-install gettext zip \
     && docker-php-ext-enable gettext zip
 
-FROM composer:1.9.3 as staging
+FROM composer:2.0.13 as staging
 
 RUN apk --no-cache add git
 
