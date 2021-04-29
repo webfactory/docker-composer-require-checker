@@ -36,7 +36,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: ComposerRequireChecker
 -      uses: docker://webfactory/composer-require-checker:3.2.0
-+      uses: webfactory/docker-composer-require-checker@0.1.0
++      uses: webfactory/docker-composer-require-checker@0.2.0
 ```
 
 *Note:* When using the Docker image, the tag refers to the Docker image tag.
