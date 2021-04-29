@@ -43,10 +43,8 @@ jobs:
 When referring to this repo, use a tag or commit hash for the Dockerfile.
 
 *Note:* This will build the Docker image every time your workflow is run.
-The build will use the `master` branch of `ComposerRequireChecker`, not a
-stable release. If you know how the `revision` build-arg can be passed to 
-Docker when running inside a GitHub action (so that you could specify the
-right version yourself), please open a PR.
+The build will currently use the `3.2.0` release tag of `ComposerRequireChecker`,
+which is the latest version as of writing.
 
 In either case, to pass a custom config file, add this:
 

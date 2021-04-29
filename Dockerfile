@@ -12,7 +12,7 @@ FROM composer:2.0.13 as staging
 RUN apk --no-cache add git
 
 WORKDIR /composer-require-checker
-ARG revision=master
+ARG revision=3.2.0
 ENV COMPOSER_REQUIRE_CHECKER_VERSION=${revision}
 RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-require-checker
 RUN git checkout $revision \
