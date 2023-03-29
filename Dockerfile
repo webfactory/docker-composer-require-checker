@@ -1,4 +1,4 @@
-FROM php:7.4-cli as base
+FROM php:8.1-cli as base
 RUN apt-get update && apt-get install -y libzip4
 
 FROM base as build_extensions
@@ -7,12 +7,12 @@ RUN apt-get update && apt-get install -y libzip-dev \
     && docker-php-ext-install gettext zip \
     && docker-php-ext-enable gettext zip
 
-FROM composer:2.0.13 as staging
+FROM composer:2 as staging
 
 RUN apk --no-cache add git
 
 WORKDIR /composer-require-checker
-ARG revision=3.2.0
+ARG revision=4.5.0
 ENV COMPOSER_REQUIRE_CHECKER_VERSION=${revision}
 RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-require-checker
 RUN git checkout $revision \

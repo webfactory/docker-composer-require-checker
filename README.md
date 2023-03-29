@@ -15,9 +15,9 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:3.2.0
+      uses: docker://webfactory/composer-require-checker:4.5.0
 ```
 
 This configuration will use the pre-built image at the Docker Hub. If you
@@ -33,17 +33,17 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: ComposerRequireChecker
--      uses: docker://webfactory/composer-require-checker:3.2.0
-+      uses: webfactory/docker-composer-require-checker@0.2.0
+-      uses: docker://webfactory/composer-require-checker:4.5.0
++      uses: webfactory/docker-composer-require-checker@0.3.0
 ```
 
 *Note:* When using the Docker image, the tag refers to the Docker image tag.
 When referring to this repo, use a tag or commit hash for the Dockerfile.
 
 *Note:* This will build the Docker image every time your workflow is run.
-The build will currently use the `3.2.0` release tag of `ComposerRequireChecker`,
+The build will currently use the `4.5.0` release tag of `ComposerRequireChecker`,
 which is the latest version as of writing.
 
 In either case, to pass a custom config file, add this:
@@ -57,9 +57,9 @@ jobs:
     name: ComposerRequireChecker
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:3.2.0
+      uses: docker://webfactory/composer-require-checker:4.5.0
 +      with:
 +        args: --config-file=composer-require-checker.js
 ```
@@ -69,7 +69,7 @@ jobs:
 Apart from GitHub Actions, you can run the Docker image in any given
 directory:
 
-`docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:3.2.0`
+`docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:4.5.0`
 
 ## Credits, Copyright and License
 
@@ -80,4 +80,4 @@ developer looking for new challenges, we'd like to hear from you!
 - <https://www.webfactory.de>
 - <https://twitter.com/webfactory>
 
-Copyright 2019 – 2021 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2019 – 2023 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
