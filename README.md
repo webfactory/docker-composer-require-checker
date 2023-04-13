@@ -40,7 +40,7 @@ jobs:
 +        args: --config-file=composer-require-checker.js
 ```
 
-If you want to use another version than 4.5.0, check
+If you want to use another version, check
 [which images have been built already](https://github.com/webfactory/docker-composer-require-checker/pkgs/container/composer-require-checker).
 
 ## Command line usage
