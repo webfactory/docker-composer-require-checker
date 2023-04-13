@@ -45,7 +45,7 @@ If you want to use another version, check
 
 ## Command line usage
 
-Apart from GitHub Actions, you can run the Docker image in any given
+Apart from GitHub Actions, you can run a published Docker image in any given
 directory:
 
 ```bash
