@@ -54,13 +54,26 @@ docker run --rm -it -v ${PWD}:/app ghcr.io/webfactory/composer-require-checker:4
 
 ## Building the image yourself
 
-Review and/or tweak the `Dockerfile` as necessary.
+Review and/or tweak the `Dockerfile` if necessary.
 
-Then, run `docker build --build-arg VERSION=4.5.0 --tag composer-require-checker .`. Be sure to set the build argument
-to a [valid version number](https://github.com/maglnet/ComposerRequireChecker/tags).
+Run
+```bash
+docker build --build-arg VERSION=4.5.0 --tag composer-require-checker .
+```
 
-To use your own image, use `composer-require-checker` instead of `ghcr.io/webfactory/composer-require-checker` in the
-commands from the previous section.
+and be sure to set the build argument `VERSION` to a [valid version number](https://github.com/maglnet/ComposerRequireChecker/tags).
+
+To validate your own image, run 
+
+```bash
+docker run --rm -it composer-require-checker --version
+```
+
+To use your own image, run
+
+```bash
+docker run --rm -it -v ${PWD}:/app composer-require-checker
+```
 
 ## Credits, Copyright and License
 
