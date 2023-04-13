@@ -1,10 +1,12 @@
-# GitHub Action for `composer-require-checker`
+# GitHub Action for `ComposerRequireChecker`
 
-This repo contains a `Dockerfile` to build https://github.com/maglnet/ComposerRequireChecker/ from scratch. Docker images are also available on the Hub at https://hub.docker.com/r/webfactory/composer-require-checker/tags.
+This repo contains a `Dockerfile` to build https://github.com/maglnet/ComposerRequireChecker/ from scratch.
+Docker images are also built weekly by a GitHub Actions workflow and are published on
+[ghcr.io](https://github.com/webfactory/docker-composer-require-checker/pkgs/container/composer-require-checker).
 
 ## GitHub Action 
 
-You can run it as a GitHub Action like so:
+You can run a prebuilt image as a GitHub Action as follows:
 
 ```yaml
 # .github/workflows/check.yml
@@ -17,12 +19,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:4.5.0
+      uses: docker://ghcr.io/webfactory/composer-require-checker:4.5.0
 ```
 
-This configuration will use the pre-built image at the Docker Hub. If you
-feel more secure with building the Docker Image ad-hoc from the `Dockerfile`
-in this repo, use the following syntax instead.
+Too pass a custom config file, add this:
 
 ```diff
 # .github/workflows/check.yml
@@ -35,41 +35,45 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: ComposerRequireChecker
--      uses: docker://webfactory/composer-require-checker:4.5.0
-+      uses: webfactory/docker-composer-require-checker@0.3.0
-```
-
-*Note:* When using the Docker image, the tag refers to the Docker image tag.
-When referring to this repo, use a tag or commit hash for the Dockerfile.
-
-*Note:* This will build the Docker image every time your workflow is run.
-The build will currently use the `4.5.0` release tag of `ComposerRequireChecker`,
-which is the latest version as of writing.
-
-In either case, to pass a custom config file, add this:
-
-```diff
-# .github/workflows/check.yml
-on: [push]
-name: Main
-jobs:
-  composer-require-checker:
-    name: ComposerRequireChecker
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: ComposerRequireChecker
-      uses: docker://webfactory/composer-require-checker:4.5.0
+      uses: docker://ghcr.io/webfactory/composer-require-checker:4.5.0
 +      with:
 +        args: --config-file=composer-require-checker.js
 ```
 
-## Docker
+If you want to use another version, check
+[which images have been built already](https://github.com/webfactory/docker-composer-require-checker/pkgs/container/composer-require-checker).
 
-Apart from GitHub Actions, you can run the Docker image in any given
+## Command line usage
+
+Apart from GitHub Actions, you can run a published Docker image in any given
 directory:
 
-`docker run --rm -it -v ${PWD}:/app webfactory/composer-require-checker:4.5.0`
+```bash
+docker run --rm -it -v ${PWD}:/app ghcr.io/webfactory/composer-require-checker:4.5.0
+```
+
+## Building the image yourself
+
+Review and/or tweak the `Dockerfile` if necessary.
+
+Run
+```bash
+docker build --build-arg VERSION=4.5.0 --tag composer-require-checker .
+```
+
+and be sure to set the build argument `VERSION` to a [valid version number](https://github.com/maglnet/ComposerRequireChecker/tags).
+
+To validate your own image, run 
+
+```bash
+docker run --rm -it composer-require-checker --version
+```
+
+To use your own image, run
+
+```bash
+docker run --rm -it -v ${PWD}:/app composer-require-checker
+```
 
 ## Credits, Copyright and License
 

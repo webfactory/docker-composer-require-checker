@@ -1,0 +1,91 @@
+name: Build and Publish Docker Image
+
+permissions:
+    contents: read
+    packages: write
+
+on:
+    push:
+        branches:
+            - main
+
+    schedule:
+        -   cron: 43 2 * * 0
+
+    workflow_dispatch:
+        inputs:
+            composer-require-checkerVersion:
+                description: 'composer-require-checker version to build'
+                required: true
+                default: 'null'
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+
+            -   uses: docker/setup-qemu-action@v2
+
+            -   uses: actions/checkout@v3
+
+            -   uses: docker/login-action@v2
+                with:
+                    registry: ghcr.io
+                    username: ${{ github.repository_owner }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Determine composer-require-checker version to build
+                run: |
+                    if [[ -z "$COMPOSER_REQUIRE_CHECKER_VERSION" ]]; then
+                      COMPOSER_REQUIRE_CHECKER_VERSION=`curl -sL https://api.github.com/repos/maglnet/ComposerRequireChecker/releases/latest | jq -r ".tag_name" | sed -e 's/^v//'`
+                    fi
+                    
+                    if [[ "$COMPOSER_REQUIRE_CHECKER_VERSION" == "null" ]]; then
+                      echo "Failed to determine composer-require-checker version to build"
+                      exit 1
+                    fi
+                    
+                    echo "Building composer-require-checker version $COMPOSER_REQUIRE_CHECKER_VERSION"
+                    echo "COMPOSER_REQUIRE_CHECKER_VERSION=$COMPOSER_REQUIRE_CHECKER_VERSION" >> $GITHUB_ENV
+
+                env:
+                    COMPOSER_REQUIRE_CHECKER_VERSION: ${{ github.event.inputs.composer-require-checkerVersion }}
+
+            -   name: Build Docker Image
+                run: |
+                    docker buildx create --name builder --use
+                    docker buildx build \
+                      --progress plain \
+                      --platform=linux/amd64,linux/arm64 \
+                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
+                      --cache-to=type=registry,ref=ghcr.io/webfactory/composer-require-checker:build-cache,mode=max,push=true \
+                      --pull \
+                      --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
+                      .
+
+            -   name: Run smoke tests
+                run: |
+                    # Load image for current platform into local Docker (see https://github.com/docker/buildx/issues/59)
+                    docker buildx build \
+                      --progress plain \
+                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
+                      --tag build \
+                      --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
+                      --load .
+                    
+                    # Check "composer-require-checker --version" output
+                    docker run --rm build --version | grep -q $COMPOSER_REQUIRE_CHECKER_VERSION
+
+            -   name: Push image to registry
+                if: github.event_name != 'pull_request'
+                run: |
+                    docker buildx build \
+                      --progress plain \
+                      --platform=linux/amd64,linux/arm64 \
+                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
+                      --tag ghcr.io/webfactory/composer-require-checker:"$COMPOSER_REQUIRE_CHECKER_VERSION" \
+                      --label org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker \
+                      --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
+                      --push .
