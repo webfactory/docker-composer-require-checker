@@ -9,6 +9,8 @@ on:
         branches:
             - main
 
+    pull_request:
+
 #    schedule:
 #        -   cron: 43 2 * * 0
 
