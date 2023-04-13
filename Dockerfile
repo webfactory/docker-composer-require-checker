@@ -12,10 +12,10 @@ FROM composer:2 as staging
 RUN apk --no-cache add git
 
 WORKDIR /composer-require-checker
-ARG revision=4.5.0
-ENV COMPOSER_REQUIRE_CHECKER_VERSION=${revision}
+ARG VERSION
+ENV COMPOSER_REQUIRE_CHECKER_VERSION=${VERSION}
 RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-require-checker
-RUN git checkout $revision \
+RUN git checkout $VERSION \
     && composer install --no-progress --no-interaction --no-ansi --no-dev --no-suggest --ignore-platform-reqs
 
 FROM base
