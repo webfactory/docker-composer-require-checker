@@ -89,6 +89,3 @@ jobs:
                       --label org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker \
                       --build-arg COMPOSER_REQUIRE_CHECKER_VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
                       --push .
-
-        # Dear future me - once https://github.com/SmartsquareGmbH/delete-old-packages/issues/5 is resolved, use that
-        # action to keep only the last 5 (or so) images.
