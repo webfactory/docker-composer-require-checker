@@ -41,7 +41,7 @@ jobs:
             -   name: Determine composer-require-checker version to build
                 run: |
                     if [[ -z "$COMPOSER_REQUIRE_CHECKER_VERSION" ]]; then
-                      COMPOSER_REQUIRE_CHECKER_VERSION=`curl -sL https://api.github.com/repos/vimeo/composer-require-checker/releases/latest | jq -r ".tag_name" | sed -e 's/^v//'`
+                      COMPOSER_REQUIRE_CHECKER_VERSION=`curl -sL https://api.github.com/repos/maglnet/composer-require-checker/releases/latest | jq -r ".tag_name" | sed -e 's/^v//'`
                     fi
                     
                     if [[ "$COMPOSER_REQUIRE_CHECKER_VERSION" == "null" ]]; then
