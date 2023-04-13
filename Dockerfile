@@ -1,4 +1,4 @@
-FROM php:8.1-cli as base
+FROM php:8-cli as base
 RUN apt-get update && apt-get install -y libzip4
 
 FROM base as build_extensions
