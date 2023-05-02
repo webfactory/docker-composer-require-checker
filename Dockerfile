@@ -3,7 +3,7 @@ RUN apt-get update && apt-get install -y libzip4
 
 FROM base as build_extensions
 
-RUN apt-get update && apt-get install -y libzip-dev \
+RUN apt-get update && apt-get install -y libzip-dev libicu-dev \
     && docker-php-ext-install gettext zip intl \
     && docker-php-ext-enable gettext zip intl
 
