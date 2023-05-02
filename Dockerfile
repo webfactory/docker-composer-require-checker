@@ -4,8 +4,8 @@ RUN apt-get update && apt-get install -y libzip4
 FROM base as build_extensions
 
 RUN apt-get update && apt-get install -y libzip-dev \
-    && docker-php-ext-install gettext zip \
-    && docker-php-ext-enable gettext zip
+    && docker-php-ext-install gettext zip intl \
+    && docker-php-ext-enable gettext zip intl
 
 FROM composer:2 as staging
 
