@@ -3,9 +3,10 @@ RUN apt-get update && apt-get install -y libzip4
 
 FROM base as build_extensions
 
-RUN apt-get update && apt-get install -y libzip-dev libicu-dev \
-    && docker-php-ext-install gettext zip intl \
-    && docker-php-ext-enable gettext zip intl
+RUN apt-get update && apt-get install -y libzip-dev libicu-dev libfreetype-dev libjpeg62-turbo-dev libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gettext zip intl gd \
+    && docker-php-ext-enable gettext zip intl gd
 
 FROM composer:2 as staging
 
@@ -20,6 +21,10 @@ RUN git checkout $VERSION \
 
 FROM base
 
+ARG ARCH
+COPY --from=build_extensions /usr/lib/${ARCH}-linux-gnu/libjpeg* /usr/lib/${ARCH}-linux-gnu/
+COPY --from=build_extensions /usr/lib/${ARCH}-linux-gnu/libpng* /usr/lib/${ARCH}-linux-gnu/
+COPY --from=build_extensions /usr/lib/${ARCH}-linux-gnu/libfreetype* /usr/lib/${ARCH}-linux-gnu/
 COPY --from=build_extensions /usr/local/lib/php /usr/local/lib/php
 COPY --from=build_extensions /usr/local/etc/php /usr/local/etc/php
 COPY --from=staging /composer-require-checker /composer-require-checker
