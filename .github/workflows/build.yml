@@ -12,6 +12,8 @@ on:
     schedule:
         -   cron: '43 2 * * 0'
 
+    pull_request:
+
     workflow_dispatch:
         inputs:
             composer-require-checkerVersion:
