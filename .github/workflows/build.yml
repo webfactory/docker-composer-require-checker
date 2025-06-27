@@ -59,8 +59,8 @@ jobs:
                     docker buildx build \
                       --progress plain \
                       --platform=linux/amd64,linux/arm64 \
-                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
-                      --cache-to=type=registry,ref=ghcr.io/webfactory/composer-require-checker:build-cache,mode=max,push=true \
+                      --cache-from=type=gha \
+                      --cache-to=type=gha,mode=max \
                       --pull \
                       --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
                       .
@@ -70,7 +70,7 @@ jobs:
                     # Load image for current platform into local Docker (see https://github.com/docker/buildx/issues/59)
                     docker buildx build \
                       --progress plain \
-                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
+                      --cache-from=type=gha \
                       --tag build \
                       --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
                       --load .
@@ -84,7 +84,7 @@ jobs:
                     docker buildx build \
                       --progress plain \
                       --platform=linux/amd64,linux/arm64 \
-                      --cache-from=ghcr.io/webfactory/composer-require-checker:build-cache \
+                      --cache-from=type=gha \
                       --tag ghcr.io/webfactory/composer-require-checker:"$COMPOSER_REQUIRE_CHECKER_VERSION" \
                       --label org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker \
                       --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
