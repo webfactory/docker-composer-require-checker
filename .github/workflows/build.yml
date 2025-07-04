@@ -66,6 +66,7 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     build-args: VERSION=${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
+                    cache-from: type=gha
                     load: true
                     tags: build
 
