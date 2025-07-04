@@ -82,6 +82,7 @@ jobs:
                 with:
                     build-args: VERSION=${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
                     platforms: linux/amd64,linux/arm64
+                    cache-from: type=gha
                     push: true
                     tags: ghcr.io/webfactory/composer-require-checker:${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
                     labels: org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker
