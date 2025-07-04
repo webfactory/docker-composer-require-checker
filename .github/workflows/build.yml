@@ -91,3 +91,12 @@ jobs:
                       --label org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker \
                       --build-arg VERSION="$COMPOSER_REQUIRE_CHECKER_VERSION" \
                       --push .
+
+            -   name: Delete potentially remaining, untagged container images
+                if: github.event_name != 'pull_request'
+                uses: Chizkiyahu/delete-untagged-ghcr-action@v6
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    package_name: composer-require-checker
+                    owner_type: org
+                    untagged_only: true
