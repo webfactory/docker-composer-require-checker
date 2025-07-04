@@ -57,10 +57,10 @@ jobs:
             -   name: Build Docker Image
                 uses: docker/build-push-action@v6
                 with:
-                    platform: linux/amd64
+                    build-args: VERSION=${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
+                    platforms: linux/amd64,linux/arm64
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
-                    build-args: VERSION=${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
 
             -   name: Load image for current platform into local Docker
                 uses: docker/build-push-action@v6
@@ -79,7 +79,7 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     build-args: VERSION=${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
-                    platform: linux/amd64
+                    platforms: linux/amd64,linux/arm64
                     push: true
                     tags: ghcr.io/webfactory/composer-require-checker:${{ env.COMPOSER_REQUIRE_CHECKER_VERSION }}
                     labels: org.opencontainers.image.source=https://github.com/webfactory/docker-composer-require-checker
