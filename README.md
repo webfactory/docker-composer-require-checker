@@ -58,7 +58,7 @@ Review and/or tweak the `Dockerfile` if necessary.
 
 Run
 ```bash
-docker build --build-arg VERSION=4.5.0 --tag composer-require-checker .
+docker build --build-arg VERSION=4.5.0 --tag composer-require-checker --build-arg ARCH=$(uname -m) .
 ```
 
 and be sure to set the build argument `VERSION` to a [valid version number](https://github.com/maglnet/ComposerRequireChecker/tags).
