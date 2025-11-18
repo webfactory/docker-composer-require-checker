@@ -2,7 +2,7 @@ FROM php:8-cli AS base
 
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions gd intl gettext zip && rm /usr/local/bin/install-php-extensions
+RUN install-php-extensions gd intl gettext zip bcmath && rm /usr/local/bin/install-php-extensions
 
 FROM composer:2 AS staging
 
