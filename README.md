@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: ComposerRequireChecker
-      uses: docker://ghcr.io/webfactory/composer-require-checker:4.5.0
+      uses: docker://ghcr.io/webfactory/composer-require-checker:4.18.0
 ```
 
 Too pass a custom config file, add this:
@@ -35,7 +35,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: ComposerRequireChecker
-      uses: docker://ghcr.io/webfactory/composer-require-checker:4.5.0
+      uses: docker://ghcr.io/webfactory/composer-require-checker:4.18.0
 +      with:
 +        args: --config-file=composer-require-checker.js
 ```
@@ -49,7 +49,7 @@ Apart from GitHub Actions, you can run a published Docker image in any given
 directory:
 
 ```bash
-docker run --rm -it -v ${PWD}:/app ghcr.io/webfactory/composer-require-checker:4.5.0
+docker run --rm -it -v ${PWD}:/app ghcr.io/webfactory/composer-require-checker:4.18.0
 ```
 
 ## Building the image yourself
@@ -58,7 +58,7 @@ Review and/or tweak the `Dockerfile` if necessary.
 
 Run
 ```bash
-docker build --build-arg VERSION=4.5.0 --tag composer-require-checker --build-arg ARCH=$(uname -m) .
+docker build --build-arg VERSION=4.18.0 --tag composer-require-checker --build-arg ARCH=$(uname -m) .
 ```
 
 and be sure to set the build argument `VERSION` to a [valid version number](https://github.com/maglnet/ComposerRequireChecker/tags).
@@ -82,6 +82,5 @@ agency with a focus on PHP (mostly [Symfony](http://github.com/symfony/symfony))
 developer looking for new challenges, we'd like to hear from you!
 
 - <https://www.webfactory.de>
-- <https://twitter.com/webfactory>
 
-Copyright 2019 – 2023 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2019 – 2025 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
