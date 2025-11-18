@@ -13,7 +13,7 @@ ARG VERSION
 ENV COMPOSER_REQUIRE_CHECKER_VERSION=${VERSION}
 RUN git clone https://github.com/maglnet/ComposerRequireChecker.git /composer-require-checker
 RUN git checkout $VERSION \
-    && composer install --no-progress --no-interaction --no-ansi --no-dev
+    && composer install --no-progress --no-interaction --no-ansi --no-dev --ignore-platform-reqs
 
 FROM base
 
